@@ -1,123 +1,76 @@
 ---
 layout: default
 ---
+# **State**
+Currently Toshi is an experimental full text search engine written in Rust and based on top of [Tantivy](https://github.com/tantivy-search/tantivy).
+Toshi is in a fluxy state right now so it's not recommended to use in production right now, but being built on top of the Rust programming language
+gives Toshi native speed and memory safety not found in other full text search engines. (Not to mention not having to deal with GC.)
 
-Text can be **bold**, _italic_, or ~~strikethrough~~.
+# **Example**
+```bash
+curl -X POST http://localhost:8080/rap \
+    -H 'Content-Type: application/json' \
+    -d '{"query": {"term": {"artist": "beatles"} }, "limit": 1}'
+```
 
-[Link to another page](./another-page.html).
-
-There should be whitespace between paragraphs.
-
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
-
-# Header 1
-
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
-
-## Header 2
-
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
-
-### Header 3
-
-```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
+```json
+{
+    "hits": 1,
+    "docs": [
+        {
+            "score": 8.398765,
+            "doc": {
+                "artist": [
+                    "beatles"
+                ],
+                "genre": [
+                    "Rock"
+                ],
+                "index": [
+                    149652
+                ],
+                "lyrics": [
+                    "..."    
+                ],
+                "song": [
+                    "i-should-have-known-better"
+                ],
+                "year": [
+                    2014
+                ]
+            }
+        }
+    ]
 }
 ```
 
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
-```
+# **Building**
+```bash
+git clone https://github.com/tantivy-search/tantivy.git
+cargo build --release
+./target/release/toshi --help
 
-#### Header 4
+Toshi Search 0.1.1
+Stephen Carman <shcarman@gmail.com>
+A full text search engine based on Tantivy
 
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
+USAGE:
+    toshi.exe [FLAGS] [OPTIONS]
 
-##### Header 5
+FLAGS:
+    -e, --enable-clustering
+    -x, --experimental
+        --help                 Prints help information
+    -m, --master
+    -V, --version              Prints version information
 
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
-
-###### Header 6
-
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
-
-### There's a horizontal rule below this.
-
-* * *
-
-### Here is an unordered list:
-
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-
-### And an ordered list:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-
-### And a nested list:
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-
-### Small image
-
-![Octocat](https://assets-cdn.github.com/images/icons/emoji/octocat.png)
-
-### Large image
-
-![Branching](https://guides.github.com/activities/hello-world/branching.png)
-
-
-### Definition lists can be used with HTML syntax.
-
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-
-```
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-```
-
-```
-The final element.
+OPTIONS:
+    -N, --cluster-name <cluster-name>     [default: kitsune]
+    -c, --config <config>                 [default: config/config.toml]
+    -C, --consul-addr <consul-addr>       [default: 127.0.0.1:8500]
+    -h, --host <host>                     [default: 0.0.0.0]
+    -l, --level <level>                   [default: info]
+    -n, --nodes <nodes>...                [default: ]
+    -d, --data-path <path>                [default: data/]
+    -p, --port <port>                     [default: 8080]
 ```
