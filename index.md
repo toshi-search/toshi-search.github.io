@@ -3,8 +3,8 @@ layout: default
 ---
 # **State**
 Currently Toshi is an experimental full text search engine written in Rust and based on top of [Tantivy](https://github.com/tantivy-search/tantivy).
-Toshi is in a fluxy state right now so it's not recommended to use in production right now, but being built on top of the Rust programming language
-gives Toshi native speed and memory safety not found in other full text search engines. (Not to mention not having to deal with GC.)
+Toshi is in a fluxy state right now so it's not recommended to use in production. (unless you are brave) Despite this, being built on top of the Rust programming language
+gives Toshi native speed and memory safety that is not found in other full text search engines. (Not to mention not having to deal with GC.)
 
 # **Example**
 ```bash
@@ -46,7 +46,7 @@ curl -X POST http://localhost:8080/rap \
 
 # **Building**
 ```bash
-git clone https://github.com/tantivy-search/tantivy.git
+git clone https://github.com/toshi-search/toshi.git
 cargo build --release
 ./target/release/toshi --help
 
